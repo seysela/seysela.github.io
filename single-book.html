@@ -31,7 +31,7 @@ h1 {
 
 <body>
 <div class="container">
-    <h1>Book Information</h1>
+    <h1>Single Book Information</h1>
     <div id="book"></div>
 </div>
 
@@ -41,19 +41,33 @@ $(document).ready(function() {
 
         var book = data.volumeInfo;
 
+        var title = book.title;
+        var authors = book.authors ? book.authors.join(", ") : "N/A";
+        var publisher = book.publisher ? book.publisher : "N/A";
+        var publishedDate = book.publishedDate ? book.publishedDate : "N/A";
+        var description = book.description ? book.description : "No description available.";
+        var image = book.imageLinks ? book.imageLinks.thumbnail : "";
+        var preview = book.previewLink ? book.previewLink : "#";
+
         var html = "";
-        html += "<img src='" + book.imageLinks.thumbnail + "'>";
-        html += "<h2>" + book.title + "</h2>";
-        html += "<p><strong>Authors:</strong> " + book.authors.join(", ") + "</p>";
-        html += "<p><strong>Publisher:</strong> " + book.publisher + "</p>";
-        html += "<p><strong>Published Date:</strong> " + book.publishedDate + "</p>";
-        html += "<p><strong>Description:</strong> " + book.description + "</p>";
-        html += "<p><a href='" + book.previewLink + "' target='_blank'>Preview this book</a></p>";
+        if (image !== "") {
+            html += "<img src='" + image + "' alt='Book cover'>";
+        }
+        html += "<h2>" + title + "</h2>";
+        html += "<p><strong>Authors:</strong> " + authors + "</p>";
+        html += "<p><strong>Publisher:</strong> " + publisher + "</p>";
+        html += "<p><strong>Published Date:</strong> " + publishedDate + "</p>";
+        html += "<p><strong>Description:</strong> " + description + "</p>";
+        html += "<p><a href='" + preview + "' target='_blank'>Preview this book</a></p>";
         html += "<div class='clear'></div>";
 
         $("#book").html(html);
+    })
+    .fail(function() {
+        $("#book").html("<p>Error loading book data.</p>");
     });
 });
 </script>
+
 </body>
 </html>
