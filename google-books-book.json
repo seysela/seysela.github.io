@@ -1,39 +1,48 @@
 {
-  "error": {
-    "code": 429,
-    "message": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'books.googleapis.com' for consumer 'project_number:624717413613'.",
-    "errors": [
-      {
-        "message": "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'books.googleapis.com' for consumer 'project_number:624717413613'.",
-        "domain": "global",
-        "reason": "rateLimitExceeded"
+  "kind": "books#volumes",
+  "totalItems": 3,
+  "items": [
+    {
+      "id": "book1",
+      "volumeInfo": {
+        "title": "Learning Web Design",
+        "authors": ["Jennifer Niederst Robbins"],
+        "publisher": "O'Reilly Media",
+        "publishedDate": "2018",
+        "description": "This book provides a comprehensive introduction to HTML, CSS, and JavaScript for building modern websites.",
+        "imageLinks": {
+          "thumbnail": "https://via.placeholder.com/128x195.png?text=Book+1"
+        },
+        "previewLink": "https://books.google.com"
       }
-    ],
-    "status": "RESOURCE_EXHAUSTED",
-    "details": [
-      {
-        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
-        "reason": "RATE_LIMIT_EXCEEDED",
-        "domain": "googleapis.com",
-        "metadata": {
-          "quota_location": "global",
-          "quota_limit_value": "20000000",
-          "consumer": "projects/624717413613",
-          "quota_limit": "defaultPerDayPerProject",
-          "quota_metric": "books.googleapis.com/default",
-          "service": "books.googleapis.com",
-          "quota_unit": "1/d/{project}"
-        }
-      },
-      {
-        "@type": "type.googleapis.com/google.rpc.Help",
-        "links": [
-          {
-            "description": "Request a higher quota limit.",
-            "url": "https://cloud.google.com/docs/quotas/help/request_increase"
-          }
-        ]
+    },
+    {
+      "id": "book2",
+      "volumeInfo": {
+        "title": "JavaScript and jQuery",
+        "authors": ["Jon Duckett"],
+        "publisher": "Wiley",
+        "publishedDate": "2014",
+        "description": "A visual guide to JavaScript and jQuery that makes complex topics easy to understand.",
+        "imageLinks": {
+          "thumbnail": "https://via.placeholder.com/128x195.png?text=Book+2"
+        },
+        "previewLink": "https://books.google.com"
       }
-    ]
-  }
+    },
+    {
+      "id": "book3",
+      "volumeInfo": {
+        "title": "Modern Web Development",
+        "authors": ["John Smith"],
+        "publisher": "Tech Press",
+        "publishedDate": "2022",
+        "description": "An overview of modern web development tools and techniques including responsive design and client-side frameworks.",
+        "imageLinks": {
+          "thumbnail": "https://via.placeholder.com/128x195.png?text=Book+3"
+        },
+        "previewLink": "https://books.google.com"
+      }
+    }
+  ]
 }
