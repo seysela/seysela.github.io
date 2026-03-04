@@ -1,48 +1,18 @@
 {
-  "kind": "books#volumes",
-  "totalItems": 3,
-  "items": [
-    {
-      "id": "book1",
-      "volumeInfo": {
-        "title": "Learning Web Design",
-        "authors": ["Jennifer Niederst Robbins"],
-        "publisher": "O'Reilly Media",
-        "publishedDate": "2018",
-        "description": "This book provides a comprehensive introduction to HTML, CSS, and JavaScript for building modern websites.",
-        "imageLinks": {
-          "thumbnail": "https://via.placeholder.com/128x195.png?text=Book+1"
-        },
-        "previewLink": "https://books.google.com"
-      }
+  "kind": "books#volume",
+  "id": "singleBook1",
+  "volumeInfo": {
+    "title": "HTML and CSS: Design and Build Websites",
+    "authors": ["Jon Duckett"],
+    "publisher": "Wiley",
+    "publishedDate": "2011",
+    "description": "This book provides a full introduction to HTML and CSS, explaining how to build and design websites in a clear and visual way. It is intended for beginners and covers modern web design principles and techniques.",
+    "pageCount": 490,
+    "categories": ["Computers", "Web Development"],
+    "imageLinks": {
+      "thumbnail": "https://via.placeholder.com/150x220.png?text=Book+Cover"
     },
-    {
-      "id": "book2",
-      "volumeInfo": {
-        "title": "JavaScript and jQuery",
-        "authors": ["Jon Duckett"],
-        "publisher": "Wiley",
-        "publishedDate": "2014",
-        "description": "A visual guide to JavaScript and jQuery that makes complex topics easy to understand.",
-        "imageLinks": {
-          "thumbnail": "https://via.placeholder.com/128x195.png?text=Book+2"
-        },
-        "previewLink": "https://books.google.com"
-      }
-    },
-    {
-      "id": "book3",
-      "volumeInfo": {
-        "title": "Modern Web Development",
-        "authors": ["John Smith"],
-        "publisher": "Tech Press",
-        "publishedDate": "2022",
-        "description": "An overview of modern web development tools and techniques including responsive design and client-side frameworks.",
-        "imageLinks": {
-          "thumbnail": "https://via.placeholder.com/128x195.png?text=Book+3"
-        },
-        "previewLink": "https://books.google.com"
-      }
-    }
-  ]
+    "language": "en",
+    "previewLink": "https://books.google.com"
+  }
 }
