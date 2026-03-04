@@ -1,19 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<title>Single Book Display</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+img {
+    float: left;
+    margin-right: 20px;
+    width: 150px;
+}
+h1 {
+    color: #2c3e50;
+}
+.clear {
+    clear: both;
+}
+</style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
 
-<h1>Testing JSON Load</h1>
-<div id="output"></div>
+<body>
+<div class="container">
+    <h1>Book Information</h1>
+    <div id="book"></div>
+</div>
 
 <script>
-$.getJSON("google-books-book.json", function(data) {
-    console.log(data);
-    $("#output").html("JSON loaded successfully");
+$(document).ready(function() {
+    $.getJSON("google-books-book.json", function(data) {
+
+        var book = data.volumeInfo;
+
+        var html = "";
+        html += "<img src='" + book.imageLinks.thumbnail + "'>";
+        html += "<h2>" + book.title + "</h2>";
+        html += "<p><strong>Authors:</strong> " + book.authors.join(", ") + "</p>";
+        html += "<p><strong>Publisher:</strong> " + book.publisher + "</p>";
+        html += "<p><strong>Published Date:</strong> " + book.publishedDate + "</p>";
+        html += "<p><strong>Description:</strong> " + book.description + "</p>";
+        html += "<p><a href='" + book.previewLink + "' target='_blank'>Preview this book</a></p>";
+        html += "<div class='clear'></div>";
+
+        $("#book").html(html);
+    });
 });
 </script>
-
 </body>
 </html>
