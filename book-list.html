@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book List Display</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.book {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+img {
+    float: left;
+    margin-right: 15px;
+    width: 100px;
+}
+.clear {
+    clear: both;
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<h1>Book Search Results</h1>
+<div id="books"></div>
+
+<script>
+$(document).ready(function() {
+    $.getJSON("google-books-search.json", function(data) {
+
+        $.each(data.items, function(index, item) {
+            var book = item.volumeInfo;
+
+            var html = "<div class='book'>";
+            html += "<img src='" + book.imageLinks.thumbnail + "'>";
+            html += "<h3>" + book.title + "</h3>";
+            html += "<p><strong>Authors:</strong> " + (book.authors ? book.authors.join(", ") : "N/A") + "</p>";
+            html += "<p>" + (book.description ? book.description.substring(0,200) + "..." : "No description") + "</p>";
+            html += "<p><a href='" + book.previewLink + "' target='_blank'>Preview</a></p>";
+            html += "<div class='clear'></div></div>";
+
+            $("#books").append(html);
+        });
+
+    });
+});
+</script>
+</body>
+</html>
