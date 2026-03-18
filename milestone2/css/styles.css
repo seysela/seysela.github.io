@@ -1,1 +1,245 @@
+/* ===== DARK ACADEMIA THEME ===== */
+:root {
+  --bg:        #1b1a17;   /* deep brown-black */
+  --surface:   #2a2926;   /* aged paper shadow */
+  --nav-bg:    #141311;   /* near black */
+  --primary:   #a67c52;   /* antique gold */
+  --primary-dk:#8c6844;
+  --accent:    #d6c3a3;   /* parchment */
+  --lilac:     #7a5c3e;   /* muted brown accent */
+  --lilac-bg:  #23221f;
+  --border:    #3b352d;
+  --text:      #eae3d2;   /* warm ivory */
+  --muted:     #b7a88a;
+  --radius:    6px;
+  --shadow:    0 6px 18px rgba(0,0,0,.6);
+}
 
+/* reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.3rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--primary);
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  background: linear-gradient(to bottom, #141311, #1b1a17);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: var(--accent);
+  margin-bottom: .5rem;
+  letter-spacing: 1px;
+}
+
+.hero p {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+/* ===== SEARCH BAR ===== */
+.search-bar {
+  display: flex;
+  max-width: 650px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.search-bar input {
+  flex: 1;
+  padding: .9rem;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: .95rem;
+  outline: none;
+}
+
+.search-bar input::placeholder {
+  color: var(--muted);
+}
+
+.search-bar button {
+  background: var(--primary);
+  border: none;
+  padding: .9rem 1.5rem;
+  color: #1b1a17;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background: var(--primary-dk);
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  flex: 1;
+}
+
+/* ===== RESULTS HEADER ===== */
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  font-size: .9rem;
+  color: var(--muted);
+}
+
+.pagination-controls select {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: .4rem;
+}
+
+/* ===== BOOK GRID ===== */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ===== BOOK CARD ===== */
+.book-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+/* cover */
+.cover-wrap {
+  height: 220px;
+  background: #1f1e1b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* fallback */
+.no-cover {
+  font-size: .75rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* text */
+.card-body {
+  padding: .9rem;
+}
+
+.card-title {
+  font-size: .9rem;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: .3rem;
+}
+
+.card-author {
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+/* ===== STATES ===== */
+.loading,
+.no-results {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--muted);
+}
+
+.spinner {
+  width: 35px;
+  height: 35px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--nav-bg);
+  color: var(--muted);
+  font-size: .8rem;
+  border-top: 1px solid var(--border);
+}
