@@ -5,15 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book Search</title>
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Libre+Baskerville&display=swap" rel="stylesheet">
 
-<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
 
-/* ===== DARK ACADEMIA STYLE ===== */
 :root {
   --bg: #1b1a17;
   --surface: #2a2926;
@@ -33,7 +30,6 @@ body {
   color: var(--text);
 }
 
-/* NAV */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -51,7 +47,7 @@ body {
   color: var(--primary);
 }
 
-/* HERO */
+
 .hero {
   text-align: center;
   padding: 3rem;
@@ -62,7 +58,7 @@ body {
   color: var(--accent);
 }
 
-/* SEARCH */
+
 .search-bar {
   display: flex;
   justify-content: center;
@@ -116,13 +112,13 @@ body {
   color: var(--muted);
 }
 
-/* LOADING */
+
 .loading {
   text-align: center;
   padding: 2rem;
 }
 
-/* PAGINATION */
+
 #pageSelect {
   margin-left: .5rem;
 }
@@ -132,7 +128,7 @@ body {
 
 <body>
 
-<!-- NAV -->
+
 <nav class="navbar">
   <div>Book Search</div>
   <div class="nav-links">
@@ -141,7 +137,7 @@ body {
   </div>
 </nav>
 
-<!-- HERO -->
+
 <div class="hero">
   <h1>Search for Books</h1>
   <div class="search-bar">
@@ -150,7 +146,6 @@ body {
   </div>
 </div>
 
-<!-- RESULTS -->
 <div style="text-align:center;">
   <span id="resultsCount"></span>
   <label>Page:</label>
@@ -172,23 +167,23 @@ body {
   // 3 pages in total gives max of 60 results
   const TOTAL_PAGES = 3;
 
-  // stores the current search query so page changes can re-use it
+  
   let currentQuery = "";
 
-  /* waits for the document to be ready before executing */
+  
   $(function () {
 
-    // enter keypress in search box triggers search
+    
     $("#searchInput").on("keypress", function (e) {
       if (e.key === "Enter") doSearch(1);
     });
 
-    // search button click
+    
     $("#searchBtn").on("click", function () {
       doSearch(1);
     });
 
-    // fresh API call when page dropdown changes, using the selected page number
+    
     $("#pageSelect").on("change", function () {
       const page = parseInt($(this).val());
       doSearch(page);
@@ -196,26 +191,24 @@ body {
 
   });
 
-  /* doSearch(page) makes a fresh API call each time, using
-     startIndex to get the correct page for the requested results */
+
   function doSearch(page) {
     const query = page === 1
       ? $("#searchInput").val().trim()
       : currentQuery;
 
-    //if search is empty, nothing happens
+    
     if (!query) return;
 
-    // saves the query so page changes re-use it
+    
     currentQuery = query;
 
-    // resets UI
+    
     $("#booksGrid").empty();
     $("#noResults").addClass("hidden");
     $("#loading").removeClass("hidden");
 
-    // calculates the startIndex for the API call based on the requested page number
-    // page 1 startIndex = 0, page 2 startIndex = 20, page 3 startIndex = 40, total is 60
+   
     const startIndex = (page - 1) * PER_PAGE;
 
     const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=${PER_PAGE}&key=${API_KEY}`;
@@ -232,19 +225,19 @@ body {
           return;
         }
 
-        // builds the page dropdown on first search only
+        
         if (page === 1) {
           buildPageDropdown();
         }
 
-        // syncs the dropdown to the current page
+        
         $("#pageSelect").val(page);
         $("#resultsHeader").removeClass("hidden");
         const rangeStart = (page - 1) * PER_PAGE + 1;
         const rangeEnd = (page - 1) * PER_PAGE + books.length;
         $("#resultsCount").text(`Showing ${rangeStart}–${rangeEnd} of ${TOTAL_PAGES * PER_PAGE} results for "${query}"`);
        
-        // renders the books
+       
         books.forEach(function (book) {
           const info    = book.volumeInfo || {};
           const title   = info.title || "Unknown Title";
@@ -270,7 +263,7 @@ body {
           $("#booksGrid").append(card);
         });
 
-        // Staggered fade in
+        
         $(".book-card").hide().each(function (i) {
           $(this).delay(i * 50).fadeIn(300);
         });
@@ -283,7 +276,7 @@ body {
       });
   }
 
-  /* buildPageDropdown creates a fixed 3 page dropdown */
+  
   function buildPageDropdown() {
     const $select = $("#pageSelect").empty();
     for (let i = 1; i <= TOTAL_PAGES; i++) {
