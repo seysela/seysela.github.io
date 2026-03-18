@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book Details</title>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="css/styles.css"> <!-- or keep inline CSS -->
+
+<style>
+.details-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  display: flex;
+  gap: 2rem;
+}
+
+.details-img {
+  width: 250px;
+}
+
+.details-info h2 {
+  margin-bottom: .5rem;
+}
+
+.details-info p {
+  margin-bottom: .8rem;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">Book App</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="bookshelf.html">My Bookshelf</a>
+  </div>
+</nav>
+
+<div class="details-container">
+  <div id="bookImage"></div>
+  <div class="details-info" id="bookDetails"></div>
+</div>
+
+<script>
+const API_KEY = "AIzaSyAKDvKl8cU38lc-1vkK-vmWA7MdAkC3MWE";
+
+// get ID from URL
+function getBookId() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id");
+}
+
+$(function () {
+  const bookId = getBookId();
+  if (!bookId) return;
+
+  const url = `https://www.googleapis.com/books/v1/volumes/${bookId}?key=${API_KEY}`;
+
+  $.getJSON(url)
+    .done(function (data) {
+      const info = data.volumeInfo || {};
+      const sale = data.saleInfo || {};
+
+      const title = info.title || "No title";
+      const authors = (info.authors || []).join(", ");
+      const publisher = info.publisher || "Unknown";
+      const description = info.description || "No description available";
+      const img = info.imageLinks?.thumbnail || "";
+      const price = sale.listPrice
+        ? `${sale.listPrice.amount} ${sale.listPrice.currencyCode}`
+        : "Not for sale";
+
+      $("#bookImage").html(
+        img ? `<img src="${img}" class="details-img">` : "No Image"
+      );
+
+      $("#bookDetails").html(`
+        <h2>${title}</h2>
+        <p><strong>Authors:</strong> ${authors}</p>
+        <p><strong>Publisher:</strong> ${publisher}</p>
+        <p><strong>Price:</strong> ${price}</p>
+        <p><strong>Description:</strong></p>
+        <p>${description}</p>
+      `);
+    })
+    .fail(function () {
+      $("#bookDetails").html("<p>Error loading book.</p>");
+    });
+});
+</script>
+
+</body>
+</html>
