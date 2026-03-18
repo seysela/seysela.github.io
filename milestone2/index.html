@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retro Book Search</title>
+    <link rel="stylesheet" href="css/style.css">
 
+    <!-- Retro font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bookshelf.html">My Bookshelf</a></li>
+  </ul>
+</nav>
+
+<h1>📚 Retro Book Finder</h1>
+<marquee>Welcome to the ultimate retro book search experience!</marquee>
+
+<input type="text" id="searchInput" placeholder="Enter book name">
+<button id="searchBtn">Search</button>
+
+<p class="loading">Searching the archives...</p>
+
+<div id="results"></div>
+
+<select id="pagination"></select>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
