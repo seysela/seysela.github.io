@@ -2,37 +2,44 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Bookshelf</title>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Libre+Baskerville&display=swap" rel="stylesheet">
+
+<!-- Main CSS -->
 <link rel="stylesheet" href="css/styles.css">
 
-<style>
-.books-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-}
-</style>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
-  <a href="index.html" class="logo">Book App</a>
+  <a href="index.html" class="logo">Book Search</a>
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="bookshelf.html" class="active">My Bookshelf</a>
   </div>
 </nav>
 
-<h2 style="text-align:center; margin-top:1rem;">My Bookshelf</h2>
+<!-- CONTENT -->
+<div class="container">
+  <h2 class="page-title">My Bookshelf</h2>
 
-<div id="booksGrid" class="books-grid"></div>
+  <div id="booksGrid" class="books-grid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Book Search App — Google Books API</p>
+</footer>
 
 <script>
-//my API key
+// my API key
 const API_KEY = "AIzaSyAKDvKl8cU38lc-1vkK-vmWA7MdAkC3MWE";
 
 const BOOK_IDS = [
@@ -45,7 +52,7 @@ $(function () {
 
   BOOK_IDS.forEach(function (id) {
 
-    const url = `https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`;
+    const url = `https://www.googleapis.com/books/v1/volumes/${id}`;
 
     $.getJSON(url)
       .done(function (data) {
@@ -58,7 +65,9 @@ $(function () {
         const card = `
           <a class="book-card" href="details.html?id=${id}">
             <div class="cover-wrap">
-              ${cover ? `<img src="${cover}">` : "No Image"}
+              ${cover 
+                ? `<img src="${cover}" alt="${title}">` 
+                : `<span class="no-cover">No Cover</span>`}
             </div>
             <div class="card-body">
               <div class="card-title">${title}</div>
@@ -68,6 +77,10 @@ $(function () {
         `;
 
         $("#booksGrid").append(card);
+      })
+
+      .fail(function () {
+        console.log("Error loading book:", id);
       });
 
   });
