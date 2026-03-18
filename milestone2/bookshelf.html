@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>My Bookshelf</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -18,24 +18,26 @@
 <div id="bookshelf" class="grid"></div>
 
 <script>
-const bookIds = [
-  "zyTCAlFPjgYC",
-  "m8dPPgAACAAJ",
-  "uW3bDwAAQBAJ"
-];
+$(document).ready(function(){
+  const bookIds = [
+    "zyTCAlFPjgYC",
+    "m8dPPgAACAAJ",
+    "uW3bDwAAQBAJ"
+  ];
 
-bookIds.forEach(id => {
-  $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}`, function(book) {
-    const info = book.volumeInfo;
+  bookIds.forEach(id => {
+    $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}`, function(book) {
+      const info = book.volumeInfo;
 
-    const html = `
-      <div class="book">
-        <img src="${info.imageLinks?.thumbnail || ""}">
-        <h3><a href="details.html?id=${book.id}">${info.title}</a></h3>
-      </div>
-    `;
+      const html = `
+        <div class="book">
+          <img src="${info.imageLinks?.thumbnail || ""}">
+          <h3><a href="details.html?id=${book.id}">${info.title}</a></h3>
+        </div>
+      `;
 
-    $("#bookshelf").append(html);
+      $("#bookshelf").append(html);
+    });
   });
 });
 </script>
