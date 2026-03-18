@@ -1,1 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Search</title>
 
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Libre+Baskerville&display=swap" rel="stylesheet">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<style>
+
+/* ===== DARK ACADEMIA STYLE ===== */
+:root {
+  --bg: #1b1a17;
+  --surface: #2a2926;
+  --nav-bg: #141311;
+  --primary: #a67c52;
+  --primary-dk: #8c6844;
+  --accent: #d6c3a3;
+  --border: #3b352d;
+  --text: #eae3d2;
+  --muted: #b7a88a;
+}
+
+body {
+  margin: 0;
+  font-family: 'Libre Baskerville', serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* NAV */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: var(--nav-bg);
+}
+
+.nav-links a {
+  color: var(--muted);
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+.nav-links a.active {
+  color: var(--primary);
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 3rem;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--accent);
+}
+
+/* SEARCH */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.search-bar input {
+  padding: .7rem;
+  width: 300px;
+}
+
+.search-bar button {
+  padding: .7rem 1rem;
+  background: var(--primary);
+  border: none;
+  cursor: pointer;
+}
+
+/* GRID */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.book-card {
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--border);
+}
+
+.cover-wrap img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: .5rem;
+}
+
+.card-title {
+  font-size: .9rem;
+  color: var(--accent);
+}
+
+.card-author {
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+/* LOADING */
+.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* PAGINATION */
+#pageSelect {
+  margin-left: .5rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div>📚 Book Search</div>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="bookshelf.html">My Bookshelf</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Search for Books</h1>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Enter a book...">
+    <button id="searchBtn">Search</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div style="text-align:center;">
+  <span id="resultsCount"></span>
+  <label>Page:</label>
+  <select id="pageSelect"></select>
+</div>
+
+<div id="loading" class="loading" style="display:none;">Loading...</div>
+<div id="booksGrid" class="books-grid"></div>
+
+<script>
+
+const PER_PAGE = 20;
+let currentQuery = "";
+
+/* SEARCH EVENTS */
+$("#searchBtn").click(() => doSearch(1));
+
+$("#searchInput").keypress(function(e){
+  if(e.which === 13) doSearch(1);
+});
+
+$("#pageSelect").change(function(){
+  doSearch(parseInt($(this).val()));
+});
+
+/* MAIN SEARCH FUNCTION */
+function doSearch(page){
+
+  const query = page === 1 
+    ? $("#searchInput").val().trim() 
+    : currentQuery;
+
+  if(!query){
+    alert("Enter a search term");
+    return;
+  }
+
+  currentQuery = query;
+
+  $("#booksGrid").empty();
+  $("#loading").show();
+
+  const startIndex = (page-1)*PER_PAGE;
+
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=${PER_PAGE}`;
+
+  $.getJSON(url)
+    .done(function(data){
+
+      $("#loading").hide();
+
+      if(!data || !data.items){
+        $("#booksGrid").html("<p>No results found</p>");
+        return;
+      }
+
+      const totalItems = data.totalItems || 0;
+      const totalPages = Math.min(Math.ceil(totalItems/PER_PAGE), 3);
+
+      buildDropdown(totalPages, page);
+
+      $("#resultsCount").text(`Showing page ${page} of ${totalPages}`);
+
+      data.items.forEach(book => {
+
+        const info = book.volumeInfo || {};
+        const title = info.title || "No title";
+        const authors = (info.authors || []).join(", ");
+        const img = info.imageLinks?.thumbnail || "";
+
+        const card = `
+          <a class="book-card" href="details.html?id=${book.id}">
+            <div class="cover-wrap">
+              ${img ? `<img src="${img}">` : "No Image"}
+            </div>
+            <div class="card-body">
+              <div class="card-title">${title}</div>
+              <div class="card-author">${authors}</div>
+            </div>
+          </a>
+        `;
+
+        $("#booksGrid").append(card);
+      });
+
+    });
+}
+
+/* DROPDOWN */
+function buildDropdown(totalPages, currentPage){
+  const select = $("#pageSelect").empty();
+
+  for(let i=1;i<=totalPages;i++){
+    select.append(`<option value="${i}">${i}</option>`);
+  }
+
+  select.val(currentPage);
+}
+
+</script>
+
+</body>
+</html>
