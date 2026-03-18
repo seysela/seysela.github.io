@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Book Details</title>
-    <link rel="stylesheet" href="style.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>Book Details</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <nav>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="bookshelf.html">My Bookshelf</a></li>
-  </ul>
+  <h2>Retro Library</h2>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="bookshelf.html">My Bookshelf</a>
+  </div>
 </nav>
 
-<h1>📖 Book Details</h1>
+<div id="bookDetails" class="details"></div>
 
-<div id="bookDetails"></div>
+<script>
+$(document).ready(function(){
+  const params = new URLSearchParams(window.location.search);
+  const bookId = params.get("id");
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="app.js"></script>
+  $.getJSON(`https://www.googleapis.com/books/v1/volumes/${bookId}`, function(book) {
+    const info = book.volumeInfo;
+    const sale = book.saleInfo;
 
+    const html = `
+      <h1>${info.title}</h1>
+      <img src="${info.imageLinks?.thumbnail || ""}">
+      <p><b>Authors:</b> ${info.authors?.join(", ") || "N/A"}</p>
+      <p><b>Publisher:</b> ${info.publisher || "N/A"}</p>
+      <p>${info.description || "No description"}</p>
+      <p><b>Price:</b> ${sale?.listPrice?.amount || "Not for sale"}</p>
+    `;
+
+    $("#bookDetails").html(html);
+  });
+});
+</script>
 </body>
 </html>
