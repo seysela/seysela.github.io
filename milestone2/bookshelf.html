@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Bookshelf</title>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+
+<style>
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">Book App</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="bookshelf.html" class="active">My Bookshelf</a>
+  </div>
+</nav>
+
+<h2 style="text-align:center; margin-top:1rem;">My Bookshelf</h2>
+
+<div id="booksGrid" class="books-grid"></div>
+
+<script>
+const API_KEY = "AIzaSyAKDvKl8cU38lc-1vkK-vmWA7MdAkC3MWE";
+
+/* 👉 PUT YOUR BOOK IDs HERE */
+const BOOK_IDS = [
+  "zyTCAlFPjgYC",
+  "m8dPPgAACAAJ",
+  "uWc3DwAAQBAJ"
+];
+
+$(function () {
+
+  BOOK_IDS.forEach(function (id) {
+
+    const url = `https://www.googleapis.com/books/v1/volumes/${id}?key=${API_KEY}`;
+
+    $.getJSON(url)
+      .done(function (data) {
+
+        const info = data.volumeInfo || {};
+        const title = info.title || "No Title";
+        const authors = (info.authors || []).join(", ");
+        const cover = info.imageLinks?.thumbnail || "";
+
+        const card = `
+          <a class="book-card" href="details.html?id=${id}">
+            <div class="cover-wrap">
+              ${cover ? `<img src="${cover}">` : "No Image"}
+            </div>
+            <div class="card-body">
+              <div class="card-title">${title}</div>
+              <div class="card-author">${authors}</div>
+            </div>
+          </a>
+        `;
+
+        $("#booksGrid").append(card);
+      });
+
+  });
+
+});
+</script>
+
+</body>
+</html>
