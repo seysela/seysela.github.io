@@ -22,7 +22,7 @@ $(document).ready(function(){
   const params = new URLSearchParams(window.location.search);
   const bookId = params.get("id");
 
-  $.getJSON(`https://www.googleapis.com/books/v1/volumes/${bookId}`, function(book) {
+  $.getJSON(`https://www.googleapis.com/books/v1/volumes/`, function(book) {
     const info = book.volumeInfo;
     const sale = book.saleInfo;
 
