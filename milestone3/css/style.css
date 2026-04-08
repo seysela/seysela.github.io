@@ -115,8 +115,8 @@ body {
   border-bottom: 3px solid var(--primary);
   margin-bottom: 1rem;
 }
-/* PAGINATION (GAME MENU STYLE) */
 
+/* PAGINATION (GAME MENU STYLE) */
 .pagination {
   display: flex;
   gap: 0.6rem;
@@ -160,12 +160,6 @@ body {
   box-shadow: 0 0 8px rgba(248,180,198,0.7);
 }
 
-/* OPTIONAL: DISABLED BUTTONS (if you add prev/next later) */
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  box-shadow: none;
-}
 /* HORIZONTAL GAME MENU*/
 .books-grid {
   display: flex;
@@ -238,7 +232,7 @@ body {
   color: var(--muted);
 }
 
-/* DETAIL PANEL (LOTUS GAME THEME) */
+/* DETAIL PANEL */
 
 .detail-panel {
   background: var(--panel);
