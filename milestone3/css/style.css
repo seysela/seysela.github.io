@@ -1,16 +1,23 @@
+/* milestone 3 CSS file.*/
+
+/* defined all the color variables here so that it's easy to update them */
 :root {
-  --bg:         #0f172a;   /* dark retro background */
-  --surface:    #1e293b;
-  --nav-bg:     #020617;
-  --primary:    #22c55e;   /* neon green */
-  --primary-dk: #16a34a;
-  --accent:     #38bdf8;   /* bright blue */
-  --border:     #94a3b8;
-  --text:       #e2e8f0;
-  --muted:      #64748b;
+  --bg:         #F5F5DC;   /* beihge page background */
+  --surface:    #ffffff;   
+  --nav-bg:     #1a3a52;   /* navbar and footer */
+  --primary:    #5b9ec9;   /* buttons, accents */
+  --primary-dk: #3a7da8;   /* hover */
+  --accent:     #b8d8f0;   
+  --teal:       #a0ccd8;   
+  --teal-bg:    #e8f4f8;  
+  --border:     #c8dfe8;   /* border colour */
+  --text:       #162a38;  
+  --muted:      #6a90a8;   
+  --radius:     15px;
+  --shadow:     0 4px 20px rgba(90,158,200,.12);
 }
 
-/* GLOBAL RESET */
+/* allows consistency */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -18,155 +25,456 @@
 }
 
 body {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Nunito', sans-serif;
   background: var(--bg);
   color: var(--text);
-  image-rendering: pixelated;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* NAVBAR */
+/* nav bar/ just the top header part now, since no navigation is needed */
 .navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
   background: var(--nav-bg);
-  border-bottom: 4px solid var(--primary);
+  position: sticky; /* stays at top when scrolling */
+  top: 0;
+  z-index: 100;
 }
 
+/* title of the page */
 .logo {
-  font-size: 0.9rem;
-  color: var(--accent);
+  font-family: 'Lora', serif;
+  font-size: 1.4rem;
+  color: #d0eaf8;
+  text-decoration: none;
+  letter-spacing: .5px;
 }
 
-/* HERO */
+/* under nav bar */
 .hero {
-  background: #020617;
-  border-bottom: 4px solid var(--primary);
+  background: linear-gradient(135deg, var(--nav-bg) 0%, #1e5478 100%);
+  color: #fff;
+  padding: 4rem 2rem 3rem;
+  text-align: center;
 }
 
 .hero h1 {
-  font-size: 1.5rem;
-  color: var(--primary);
+  font-family: 'Lora', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #d8eef8;
+  margin-bottom: .6rem;
 }
 
 .hero p {
-  font-size: 0.7rem;
-  color: var(--muted);
+  color: #88b8d8;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-/* SEARCH BAR */
+/* search bar */
 .search-bar {
-  border: 3px solid var(--border);
-  border-radius: 0;
-  box-shadow: 6px 6px 0 #000;
+  display: flex;
+  max-width: 700px;
+  margin: 0 auto;
+  border-radius: 50px; 
+  overflow: hidden;
+  box-shadow: 0 4px 28px rgba(0,0,0,.3);
 }
 
 .search-bar input {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.7rem;
-  background: #020617;
+  flex: 1;
+  border: none;
+  padding: .95rem 1.4rem;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  outline: none;
+  background: #fff;
   color: var(--text);
 }
 
 .search-bar button {
   background: var(--primary);
-  font-family: 'Press Start 2P', cursive;
-  border-left: 3px solid var(--border);
+  border: none;
+  padding: .95rem 1.8rem;
+  font-size: .98rem;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  color: #fff;
   cursor: pointer;
+  transition: background .2s;
 }
 
-/* PIXEL BUTTON EFFECT */
-.search-bar button:active {
-  transform: translate(2px, 2px);
-  box-shadow: none;
+.search-bar button:hover { 
+  background: var(--primary-dk);
 }
 
-/* SECTION TITLE */
+/* main content area */
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  flex: 1;
+}
+
+/* 'my collection' section title */
 .section-title {
-  font-size: 1rem;
-  border-bottom: 3px solid var(--primary);
+  font-family: 'Lora', serif;
+  font-size: 1.8rem;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
 }
 
-/* BOOK CARDS */
+/* results header */
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-bottom: 1.5rem;
+  font-size: .98rem;
+  color: var(--muted);
+}
+
+/* pagination buttons/ shows each of the 5 available pages */
+.pagination {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: .4rem .85rem;
+  border-radius: 6px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+.pagination button:hover { 
+  background: var(--teal-bg); 
+}
+
+/* current page is highlighted in blue */
+.pagination button.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* books grid */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* book cards */
 .book-card {
   background: var(--surface);
-  border: 3px solid var(--border);
-  border-radius: 0;
-  box-shadow: 6px 6px 0 #000;
-  transition: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .25s, box-shadow .25s;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .book-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: none;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 28px rgba(90,158,200,.2);
 }
 
-/* COVER */
+/* selected book is highlighted in blue at the border */
+.book-card.selected {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* cover wrapper */
 .book-card .cover-wrap {
-  background: #020617;
-  border-bottom: 3px solid var(--border);
+  background: var(--teal-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 190px;
+  overflow: hidden;
 }
 
-/* TEXT */
+.book-card .cover-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .3s;
+}
+
+/* zooms cover on card hover */
+.book-card:hover .cover-wrap img { 
+  transform: scale(1.04); 
+}
+
+/* placeholder for books with no cover */
+.no-cover {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.book-card .card-body {
+  padding: .75rem .85rem .85rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
 .book-card .card-title {
-  font-size: 0.6rem;
+  font-weight: 800;
+  font-size: .88rem;
+  line-height: 1.35;
+  color: var(--text);
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-card .card-title:hover { 
+  color: var(--primary); 
 }
 
 .book-card .card-author {
-  font-size: 0.55rem;
+  font-size: .80rem;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* DETAIL PANEL */
+/* for the book details */
+/* details appear below the grid when a book is clicked. no page reload because this is a SPA */
 .detail-panel {
-  border: 4px solid var(--primary);
-  border-radius: 0;
-  box-shadow: 8px 8px 0 #000;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2rem;
+  animation: fadeIn .3s ease;
 }
 
-/* TAGS */
-.meta-tag, .price-tag {
-  border-radius: 0;
-  font-size: 0.6rem;
-  border: 2px solid var(--border);
+/* fade in animation for the detail panel */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
 }
 
-/* BUTTON */
+/* for small/mobile screens */
+@media (max-width: 560px) {
+  .detail-panel { grid-template-columns: 1fr; }
+}
+
+.detail-cover img {
+  max-width: 180px;
+  max-height: 260px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(20,50,80,.15);
+}
+
+.detail-cover {
+  display: flex;
+  justify-content: center;
+}
+
+/* placeholder for no covers */
+.detail-cover .no-cover-lg {
+  background: var(--teal-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-info {
+  padding-top: 20px;
+}
+
+.detail-info h2 {
+  font-family: 'Lora', serif;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin-bottom: .4rem;
+}
+
+/* metadata pill tags */
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin: .9rem 0 1rem;
+}
+
+/* regular tags */
+.meta-tag {
+  background: var(--teal-bg);
+  color: #2a6080;
+  font-size: .85rem;
+  font-weight: 700;
+  padding: .25rem .7rem;
+  border-radius: 20px;
+  border: 1px solid var(--teal);
+}
+
+/* dark blue pill used when a price is available */
+.price-tag {
+  background: var(--accent);
+  color: #1a4060;
+  font-size: .85rem;
+  font-weight: 700;
+  padding: .25rem .7rem;
+  border-radius: 20px;
+  border: 1px solid var(--primary);
+}
+
+/* sub headings inside detail panel */
+.detail-info h3 {
+  font-size: .98rem;
+  font-weight: 700;
+  color: var(--primary-dk);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-top: 1rem;
+  margin-bottom: .3rem;
+}
+
+.detail-info p {
+  font-size: .95rem;
+  line-height: 1.75;
+  color: #1e3a50;
+}
+
+/* preview button */
 .preview-btn {
+  display: inline-block;
+  margin-top: 1.6rem;
   background: var(--primary);
-  border: 3px solid #000;
-  border-radius: 0;
-  box-shadow: 4px 4px 0 #000;
-  font-size: 0.7rem;
+  color: #fff;
+  padding: .65rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: .9rem;
+  transition: background .2s;
 }
 
-.preview-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: none;
+.preview-btn:hover { 
+  background: var(--primary-dk); 
 }
 
-/* CLOSE BUTTON */
+/* close button (X) for the detail panel */
 .close-btn {
-  border-radius: 0;
-  border: 3px solid var(--border);
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all .2s ease;
 }
 
-/* PAGINATION */
-.pagination button {
-  border-radius: 0;
-  border: 2px solid var(--border);
-  font-size: 0.6rem;
-}
-
-.pagination button.active {
+.close-btn:hover { 
   background: var(--primary);
-  color: #000;
+  color: #fff;
 }
 
-/* SPINNER (retro style) */
+/* loading spinner */
+.loading {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+}
+
 .spinner {
-  border: 4px solid var(--border);
-  border-top-color: var(--primary);
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary); 
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin: 0 auto 1rem;
 }
 
-/* FOOTER */
-.footer {
-  border-top: 4px solid var(--primary);
-  font-size: 0.6rem;
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* empty state */
+.no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 1rem;
+  color: var(--muted);
 }
+
+/* divider between search and my personal collection */
+.divider {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* hides elements when not needed */
+.hidden { display: none !important; }
+
+/* footer */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--nav-bg);
+  color: #5a88a8;
+  font-size: .85rem;
+  margin-top: auto;
+}
+
