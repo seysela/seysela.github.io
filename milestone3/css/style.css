@@ -26,7 +26,6 @@ body {
   font-family: 'Press Start 2P', cursive;
   background: linear-gradient(to bottom, #fff7f8, #fffdf7);
   color: var(--text);
-  image-rendering: pixelated;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
