@@ -10,11 +10,11 @@ const TOTAL_PAGES = 5;
 // volume IDs for the my personal collection section
 // fetched individually from the API on page load
 const MY_BOOK_IDS = [
-  "rbONEQAAQBAJ",
-  "fYlMx-xzzh4C",
-  "fkc10_zCBv0C",
-  "Dvt4rPSKJf8C",
-  "dcSbDwAAQBAJ",
+   "-9WUEQAAQBAJ",
+  "Vf9JtAEACAAJ",
+  "FQaalAEACAAJ",
+  "LKdGpOxtEHsC",
+  "RehWEQAAQBAJ",
 ];
 
 // stores the active search query so page buttons can re-use it
