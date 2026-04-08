@@ -7,7 +7,7 @@ const API_KEY = "AIzaSyAKDvKl8cU38lc-1vkK-vmWA7MdAkC3MWE";
 const PER_PAGE    = 10;
 const TOTAL_PAGES = 5;
 
-// volume IDs for the my personal collection section
+// volume IDs for the my collection section
 // fetched individually from the API on page load
 const MY_BOOK_IDS = [
    "-9WUEQAAQBAJ",
@@ -79,15 +79,12 @@ function doSearch(page) {
       $("#searchLoading").addClass("hidden");
 
       if (books.length === 0) {
-        // show empty state message if nothing comes back
         $("#noResults").removeClass("hidden");
         return;
       }
-
-      // shows the results section
+     
       $("#searchSection").removeClass("hidden");
 
-      // builds the result count string
       const rangeStart = startIndex + 1;
       const rangeEnd   = startIndex + books.length;
       $("#resultsCount").text(
@@ -97,24 +94,20 @@ function doSearch(page) {
       // builds the numbered page buttons
       buildPagination(page);
 
-      // renders a card for each book returned
       books.forEach(function (book) {
         $("#booksGrid").append(buildCard(book, "search"));
       });
 
-      // staggered fade-in, each card waits 40ms longer than the previous
       $("#booksGrid .book-card").hide().each(function (i) {
         $(this).delay(i * 40).fadeIn(280);
       });
 
-      // scroll up to the results section
       $("html, body").animate(
         { scrollTop: $("#searchSection").offset().top - 80 },
         300
       );
     })
     .fail(function () {
-      // shows error if the API call fails
       $("#searchLoading").addClass("hidden");
       $("#noResults").removeClass("hidden")
         .find("p").text("API error. Please check the API key and try again.");
@@ -132,7 +125,6 @@ function buildPagination(currentPage) {
     
     if (i === currentPage) $btn.addClass("active");
 
-    // each button triggers a new API call for that page
     $btn.on("click", function () {
       doSearch(i);
     });
@@ -191,7 +183,7 @@ function buildCard(book, source) {
   const title   = info.title || "Unknown Title";
   const authors = (info.authors || ["Unknown Author"]).join(", ");
 
-  // uses thumbnail if available, otherwise shows a text placeholder
+  // uses thumbnail if available, otherwise shows a text placeholder instead
   const cover = info.imageLinks
     ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail)
     : null;
@@ -201,7 +193,7 @@ function buildCard(book, source) {
     : `<span class="no-cover">No Cover</span>`;
 
   // clicking shows details
-  // on the same page instead of navigating to a new page
+  // on the same page instead of navigating or opening a new page
   const $card = $(`
     <div class="book-card" data-id="${book.id}" data-source="${source}">
       <div class="cover-wrap">${imgHtml}</div>
@@ -216,11 +208,9 @@ function buildCard(book, source) {
     const bookId = $(this).data("id");
     const src    = $(this).data("source");
 
-    // removes selected highlight from all cards in this grid
     const gridId = src === "search" ? "#booksGrid" : "#collectionGrid";
     $(gridId).find(".book-card").removeClass("selected");
 
-    // highlights the clicked card with a blue ring
     $(this).addClass("selected");
 
     // fetches and displays the details panel
@@ -229,8 +219,6 @@ function buildCard(book, source) {
 
   return $card;
 }
-
-
 /* loadDetails(bookId)
    fetches full book data by volume ID and
    renders the detail panel below the grid
@@ -285,7 +273,7 @@ function renderDetails(book) {
     if (src) coverHtml = `<img src="${src}" alt="${title}" />`;
   }
 
-  // price only shown if the book is for sale and has a list price
+  // price is only shown if the book is for sale and has a price listed
   let priceHtml = "";
   if (sale.saleability === "FOR_SALE" && sale.listPrice) {
     priceHtml = `
@@ -333,7 +321,7 @@ function renderDetails(book) {
       </div>
     </div>`;
 
-  // injects the panel into the page
+  // adds the panel into the page
   $("#detailPanel").html(html);
   document.getElementById("detailPanel").scrollIntoView({
    behavior: "smooth",
