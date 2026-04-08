@@ -116,7 +116,59 @@ body {
   border-bottom: 3px solid var(--primary);
   margin-bottom: 1rem;
 }
+/* =========================
+   PAGINATION (GAME MENU STYLE)
+   ========================= */
 
+.pagination {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* BUTTONS */
+.pagination button {
+  font-family: 'Press Start 2P', cursive;
+  background: #fff;
+  border: 2px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.7rem;
+  font-size: 0.6rem;
+  cursor: pointer;
+
+  /* pixel style */
+  box-shadow: 3px 3px 0 var(--border);
+  transition: none;
+}
+
+/* HOVER (like selecting menu item) */
+.pagination button:hover {
+  background: var(--highlight);
+  border-color: var(--primary);
+}
+
+/* CLICK EFFECT */
+.pagination button:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* ACTIVE PAGE (current selection) */
+.pagination button.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(248,180,198,0.7);
+}
+
+/* OPTIONAL: DISABLED BUTTONS (if you add prev/next later) */
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
 /* =========================
    🎮 HORIZONTAL GAME MENU
    ========================= */
@@ -191,9 +243,7 @@ body {
   color: var(--muted);
 }
 
-/* =========================
-   📖 DETAIL PANEL (LOTUS GAME THEME)
-   ========================= */
+/* DETAIL PANEL (LOTUS GAME THEME) */
 
 .detail-panel {
   background: var(--panel);
