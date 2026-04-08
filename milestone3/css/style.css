@@ -1,199 +1,259 @@
+/* =========================
+   LOTUS GAME MENU THEME
+   ========================= */
+
+/* 🌸 COLOR SYSTEM */
 :root {
-  --bg: #020617;
-  --panel: #0f172a;
-  --primary: #22c55e;
-  --accent: #38bdf8;
-  --border: #94a3b8;
-  --text: #e2e8f0;
-  --muted: #64748b;
+  --bg: #fff7f8;        /* light pink */
+  --panel: #fffdf7;     /* beige */
+  --primary: #f8b4c6;   /* lotus pink */
+  --accent: #c7e9c0;    /* soft green */
+  --highlight: #fff4b8; /* pale yellow */
+  --border: #e8dcd1;    /* beige border */
+  --text: #5a4a4a;
+  --muted: #a38f8f;
 }
 
-/* GLOBAL */
+/* RESET */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* BODY */
 body {
-  background: radial-gradient(circle at center, #020617 0%, #000 100%);
+  font-family: 'Press Start 2P', cursive;
+  background: linear-gradient(to bottom, #fff7f8, #fffdf7);
   color: var(--text);
   image-rendering: pixelated;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* TITLE (Orbitron = futuristic arcade) */
-.hero h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px rgba(56,189,248,0.7);
-}
-
-/* SUBTEXT */
-.hero p {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
-  color: var(--muted);
-}
-
-/* NAV */
+/* NAVBAR */
 .navbar {
-  background: #000;
+  background: #fff;
   border-bottom: 4px solid var(--primary);
+  padding: 1rem 2rem;
 }
 
 .logo {
   font-family: 'Orbitron', sans-serif;
-  color: var(--primary);
+  color: #e89ab0;
   font-size: 1rem;
 }
 
-/* GAME MENU PANEL */
-.container {
-  max-width: 900px;
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
 }
 
-/* MENU CARD STYLE */
-.book-card {
+.hero h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #e89ab0;
+  text-shadow: 0 0 8px rgba(248,180,198,0.6);
+  letter-spacing: 2px;
+}
+
+.hero p {
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+/* SEARCH BAR */
+.search-bar {
+  display: flex;
+  max-width: 600px;
+  margin: 1.5rem auto;
+  border: 3px solid var(--border);
+  background: #fff;
+  box-shadow: 4px 4px 0 var(--border);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  padding: .8rem;
   font-family: 'Press Start 2P', cursive;
+  font-size: 0.65rem;
+  outline: none;
+}
+
+.search-bar button {
+  background: var(--accent);
+  border: none;
+  padding: .8rem 1rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.65rem;
+  cursor: pointer;
+}
+
+.search-bar button:active {
+  transform: translate(2px,2px);
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  flex: 1;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  color: #d98ca3;
+  border-bottom: 3px solid var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* =========================
+   🎮 HORIZONTAL GAME MENU
+   ========================= */
+.books-grid {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+/* scrollbar */
+.books-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.books-grid::-webkit-scrollbar-thumb {
+  background: var(--primary);
+}
+
+/* BOOK CARD */
+.book-card {
+  min-width: 180px;
+  max-width: 180px;
+  flex-shrink: 0;
+
   background: var(--panel);
   border: 3px solid var(--border);
-  border-radius: 0;
-  box-shadow: 6px 6px 0 #000;
-  transition: none;
-  position: relative;
+  box-shadow: 4px 4px 0 var(--border);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
-/* HOVER = SELECTED MENU ITEM */
+/* HOVER = GAME SELECT */
 .book-card:hover {
-  background: #020617;
+  transform: translate(2px,2px);
+  background: #fffafc;
   border-color: var(--primary);
-  transform: translate(3px, 3px);
-  box-shadow: none;
+  box-shadow: 0 0 12px rgba(248,180,198,0.6);
 }
 
-/* SELECTED STATE (like game cursor) */
-.book-card.selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary);
+/* COVER */
+.book-card .cover-wrap {
+  height: 180px;
+  background: #fff;
+  border-bottom: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* TITLE TEXT */
+.book-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* TEXT */
+.book-card .card-body {
+  padding: .6rem;
+}
+
 .book-card .card-title {
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.75rem;
-  color: var(--accent);
+  font-size: 0.7rem;
+  color: #e89ab0;
 }
 
-/* AUTHOR / SUBTEXT */
 .book-card .card-author {
   font-size: 0.55rem;
   color: var(--muted);
 }
 
-/* COVER */
-.book-card .cover-wrap {
-  border-bottom: 3px solid var(--border);
-  background: #000;
-}
-
-/* SEARCH BAR = COMMAND INPUT */
-.search-bar {
-  border: 3px solid var(--border);
-  border-radius: 0;
-  box-shadow: 6px 6px 0 #000;
-  overflow: hidden;
-}
-
-.search-bar input {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
-  background: #000;
-  color: var(--text);
-}
-
-/* BUTTON = GAME BUTTON */
-.search-bar button {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.65rem;
-  background: var(--primary);
-  border-left: 3px solid var(--border);
-  cursor: pointer;
-}
-
-/* PRESS EFFECT */
-.search-bar button:active {
-  transform: translate(2px, 2px);
-  box-shadow: none;
-}
-
-/* SECTION HEADINGS */
-.section-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  color: var(--primary);
-  border-bottom: 3px solid var(--primary);
-  text-transform: uppercase;
-}
-
-/* DETAIL PANEL (like game info screen) */
+/* DETAIL PANEL */
 .detail-panel {
-  font-family: 'Press Start 2P', cursive;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #fffdf7;
   border: 4px solid var(--primary);
-  background: #000;
-  box-shadow: 8px 8px 0 #000;
+  box-shadow: 6px 6px 0 var(--border);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1.5rem;
 }
 
-/* DETAIL TITLE */
+@media (max-width: 600px) {
+  .detail-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
 .detail-info h2 {
   font-family: 'Orbitron', sans-serif;
-  color: var(--accent);
+  color: #e89ab0;
 }
 
 /* TAGS */
 .meta-tag, .price-tag {
-  font-family: 'Press Start 2P', cursive;
-  border-radius: 0;
   font-size: 0.6rem;
   border: 2px solid var(--border);
+  padding: .2rem .5rem;
+  margin-right: .3rem;
 }
 
 /* BUTTON */
 .preview-btn {
-  font-family: 'Press Start 2P', cursive;
+  display: inline-block;
+  margin-top: 1rem;
   background: var(--primary);
-  border: 3px solid #000;
-  box-shadow: 4px 4px 0 #000;
-  font-size: 0.65rem;
+  color: #fff;
+  padding: .6rem 1rem;
+  border: 2px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+  font-size: 0.6rem;
+  text-decoration: none;
 }
 
 .preview-btn:active {
-  transform: translate(2px, 2px);
+  transform: translate(2px,2px);
   box-shadow: none;
 }
 
 /* PAGINATION */
 .pagination button {
   font-family: 'Press Start 2P', cursive;
-  border-radius: 0;
   border: 2px solid var(--border);
   font-size: 0.6rem;
+  padding: .3rem .6rem;
 }
 
 .pagination button.active {
   background: var(--primary);
-  color: #000;
 }
 
 /* FOOTER */
 .footer {
-  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  padding: 1rem;
   font-size: 0.55rem;
   border-top: 4px solid var(--primary);
+  margin-top: auto;
 }
-
-/* OPTIONAL: blinking cursor effect */
-.search-bar input::placeholder {
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0.3; }
-}
-
