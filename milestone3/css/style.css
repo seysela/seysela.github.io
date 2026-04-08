@@ -4,13 +4,13 @@
 :root {
   --bg:         #F5F5DC;   /* beige page background */
   --surface:    #ffffff;   
-  --nav-bg:     #1a3a52;   /* navbar and footer */
-  --primary:    #5b9ec9;   /* buttons, accents */
-  --primary-dk: #3a7da8;   /* hover */
+  --nav-bg:     #E3C8C8;   /* navbar and footer */
+  --primary:    #C8D5E3;   /* buttons, accents */
+  --primary-dk: #C8C8E3;   /* hover */
   --accent:     #b8d8f0;   
   --teal:       #a0ccd8;   
   --teal-bg:    #e8f4f8;  
-  --border:     #c8dfe8;   /* border colour */
+  --border:     #C8E3D5;   /* border colour */
   --text:       #162a38;  
   --muted:      #6a90a8;   
   --radius:     15px;
