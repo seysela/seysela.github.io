@@ -37,6 +37,7 @@ body {
   background: #fff;
   border-bottom: 4px solid var(--primary);
   padding: 1rem 2rem;
+  position: sticky; 
 }
 
 .logo {
