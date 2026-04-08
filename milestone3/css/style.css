@@ -2,7 +2,7 @@
    LOTUS GAME MENU THEME
    ========================= */
 
-/* 🌸 COLOR SYSTEM */
+/*  COLOR SYSTEM */
 :root {
   --bg: #fff7f8;        /* light pink */
   --panel: #fffdf7;     /* beige */
@@ -116,9 +116,7 @@ body {
   border-bottom: 3px solid var(--primary);
   margin-bottom: 1rem;
 }
-/* =========================
-   PAGINATION (GAME MENU STYLE)
-   ========================= */
+/* PAGINATION (GAME MENU STYLE) */
 
 .pagination {
   display: flex;
@@ -169,9 +167,7 @@ body {
   cursor: not-allowed;
   box-shadow: none;
 }
-/* =========================
-   🎮 HORIZONTAL GAME MENU
-   ========================= */
+/* HORIZONTAL GAME MENU*/
 .books-grid {
   display: flex;
   gap: 1.5rem;
