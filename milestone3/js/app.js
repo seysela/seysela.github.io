@@ -63,8 +63,7 @@ function doSearch(page) {
   $("#searchSection").addClass("hidden");
   $("#searchLoading").removeClass("hidden");
 
-  // startIndex moves forward by PER_PAGE for each page:
-  // page 1 = 0, page 2 = 10, page 3 = 20, page 4 = 30, page 5 = 40
+  // startIndex moves forward by PER_PAGE for each page
   const startIndex = (page - 1) * PER_PAGE;
 
   const url = `https://www.googleapis.com/books/v1/volumes`
@@ -123,16 +122,14 @@ function doSearch(page) {
 }
 
 
-/* buildPagination(currentPage)
-   creates one numbered button per page
-   the active page button is highlighted in blue */
+
 function buildPagination(currentPage) {
   const $pag = $("#pagination").empty();
 
   for (let i = 1; i <= TOTAL_PAGES; i++) {
     const $btn = $(`<button>${i}</button>`);
 
-    // highlights the currently active page
+    
     if (i === currentPage) $btn.addClass("active");
 
     // each button triggers a new API call for that page
@@ -162,7 +159,7 @@ function loadCollection() {
   $.when(...requests)
     .done(function () {
 
-      // normalizes arguments into a plain array
+      
       const results = MY_BOOK_IDS.length === 1
         ? [arguments[0]]
         : Array.from(arguments).map(function (a) { return a[0]; });
@@ -175,7 +172,7 @@ function loadCollection() {
         $("#collectionGrid").append(buildCard(book, "collection"));
       });
 
-      // staggered fade-in for collection cards
+      
       $("#collectionGrid .book-card").hide().each(function (i) {
         $(this).delay(i * 80).fadeIn(350);
       });
@@ -188,9 +185,7 @@ function loadCollection() {
 
 /* buildCard(book, source)
    builds and returns a single book card element
-   source = "search" or "collection", used to
-   know which grid to remove the highlight from
-   when a new card is selected */
+   source = "search" or "collection" */
 function buildCard(book, source) {
   const info    = book.volumeInfo || {};
   const title   = info.title || "Unknown Title";
@@ -239,7 +234,7 @@ function buildCard(book, source) {
 /* loadDetails(bookId)
    fetches full book data by volume ID and
    renders the detail panel below the grid
-   no page reload */
+   no page reload needed */
 function loadDetails(bookId) {
 
   // shows a loading spinner inside the detail panel while fetching
