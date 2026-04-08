@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Search SPA - Milestone 3</title>
 
+  <!-- google fonts.  for headings,  for body text -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- stylesheet. links to the file located in the css subfolder -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- jQuery must load before app.js -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- logic file. links to the file located in the js subfolder -->
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- navbar -->
+  <nav class="navbar">
+    <span class="logo">Milestone 3 — Book Search SPA</span>
+  </nav>
+
+  <!-- hero section -->
+  <header class="hero">
+    <h1>Search for Books</h1>
+    <p>Provided by the Google Books API</p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Enter a title, author, or keyword..." />
+      <button id="searchBtn">Search</button>
+    </div>
+  </header>
+
+  <!-- main content -->
+  <main class="container">
+
+    <!-- search results. hidden on page load, revealed after a search -->
+    <section id="searchSection" class="hidden">
+      <h2 class="section-title">Search Results</h2>
+
+      <!-- result count text + numbered page buttons -->
+      <div class="results-header">
+        <span id="resultsCount"></span>
+        <div id="pagination" class="pagination"></div>
+      </div>
+
+      <!-- books cards are injected here by app.js -->
+      <div id="booksGrid" class="books-grid"></div>
+    </section>
+
+    <!-- spinner is shown while search API call is in progress -->
+    <div id="searchLoading" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Searching for Books...</p>
+    </div>
+
+    <!-- shown when the API returns no results -->
+    <div id="noResults" class="no-results hidden">
+      <p>No books were found. Try a different search term or try again later.</p>
+    </div>
+
+    <!-- details panel. hidden by default and appears below the results when a book card is clicked 
+     no page reload required. -->
+    <div id="detailPanel" class="hidden"></div>
+
+    <!-- divider line between search and collection -->
+    <hr class="divider" />
+
+    <!-- my collection section. always visible, books loaded on page open -->
+    <section id="collectionSection">
+      <h2 class="section-title">My Google Books Collection</h2>
+
+      <!-- spinner shown while collection is loading -->
+      <div id="collectionLoading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading collection...</p>
+      </div>
+
+      <!-- collection book cards injected here by app.js -->
+      <div id="collectionGrid" class="books-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- footer -->
+  <footer class="footer">
+    <p>Milestone 3 — Book Search SPA &mdash; Google Books API</p>
+  </footer>
+
+</body>
+</html>
