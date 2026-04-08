@@ -1,7 +1,7 @@
 /* milestone 3 javascript and jQuery logic file */
 
 // my google books API key
-const API_KEY = "";
+const API_KEY = "AIzaSyAKDvKl8cU38lc-1vkK-vmWA7MdAkC3MWE";
 
 // 10 results per page and 5 pages in total = 50 results overall
 const PER_PAGE    = 10;
