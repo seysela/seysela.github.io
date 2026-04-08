@@ -1,6 +1,6 @@
 /* milestone 3 javascript and jQuery logic file */
 
-// my google books API key
+// my own google books API key
 const API_KEY = "AIzaSyAKDvKl8cU38lc-1vkK-vmWA7MdAkC3MWE";
 
 // 10 results per page and 5 pages in total = 50 results overall
@@ -49,13 +49,10 @@ function doSearch(page) {
   const query = page === 1
     ? $("#searchInput").val().trim()
     : currentQuery;
-
   // nothing happens if the search box is empty
   if (!query) return;
-
   // saves the query so pagination buttons can re-use it
   currentQuery = query;
-
   // resets the UI for a fresh search
   $("#booksGrid").empty();
   $("#detailPanel").addClass("hidden").empty();
@@ -63,7 +60,6 @@ function doSearch(page) {
   $("#searchSection").addClass("hidden");
   $("#searchLoading").removeClass("hidden");
 
-  // startIndex moves forward by PER_PAGE for each page
   const startIndex = (page - 1) * PER_PAGE;
 
   const url = `https://www.googleapis.com/books/v1/volumes`
@@ -156,15 +152,12 @@ function loadCollection() {
         ? [arguments[0]]
         : Array.from(arguments).map(function (a) { return a[0]; });
 
-      // hides the loading spinner
       $("#collectionLoading").addClass("hidden");
 
-      // renders a card for each book
       results.forEach(function (book) {
         $("#collectionGrid").append(buildCard(book, "collection"));
       });
 
-      
       $("#collectionGrid .book-card").hide().each(function (i) {
         $(this).delay(i * 80).fadeIn(350);
       });
