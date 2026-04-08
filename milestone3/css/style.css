@@ -2,7 +2,7 @@
 
 /* defined all the color variables here so that it's easy to update them */
 :root {
-  --bg:         #F5F5DC;   /* beihge page background */
+  --bg:         #F5F5DC;   /* beige page background */
   --surface:    #ffffff;   
   --nav-bg:     #1a3a52;   /* navbar and footer */
   --primary:    #5b9ec9;   /* buttons, accents */
