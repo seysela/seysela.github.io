@@ -11,7 +11,6 @@
   <!-- stylesheet -->
   <link rel="stylesheet" href="css/style.css" />
  
-  <!-- mustache template. replaces {{variable}} with real data -->
  
   <!-- single book card for grid view -->
   <script type="text/template" id="tpl-card-grid">
@@ -102,7 +101,7 @@
     <span class="logo">Milestone 4 — Book Search SPA</span>
   </nav>
  
-  <!--search section -->
+  <!--search -->
   <header class="hero">
     <h1>Search for Books</h1>
     <p>Powered by the Google Books API</p>
@@ -115,7 +114,7 @@
   <!-- main content -->
   <main class="container">
  
-    <!-- switches between search results and collection
+    <!-- switches between search results and collection 
         results are preserved when switching tabs -->
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="search">Search Results</button>
@@ -167,15 +166,15 @@
  
     </div>
  
-    <!-- my library tab -->
+    <!-- my collection tab -->
     <div id="tab-collection" class="tab-content hidden">
  
-      <!-- sub tabs between in my library for if i ever wanna add other tabs
+      <!-- sub tabs between my collection if i ever want to add other tabs
         + view toggle -->
       <div class="sub-tab-bar">
         <button class="sub-tab-btn active" data-subtab="mybooks">My Books</button>
  
-        <!-- toggle for collection, same as search results -->
+        <!-- toggle for collection / same as search results -->
         <div class="view-toggle" style="margin-left: auto;">
           <button id="btnCollectionGrid" class="view-btn active" title="Grid view">&#9639; Grid</button>
           <button id="btnCollectionList" class="view-btn" title="List view">&#9776; List</button>
