@@ -1,1 +1,213 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Search SPA – Milestone 4</title>
+ 
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+ 
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+ 
+  <!-- mustache template. replaces {{variable}} with real data -->
+ 
+  <!-- single book card for grid view -->
+  <script type="text/template" id="tpl-card-grid">
+    <div class="book-card" data-id="{{id}}" data-source="{{source}}">
+      <div class="cover-wrap">
+        {{#cover}}
+          <img src="{{cover}}" alt="{{title}}" loading="lazy" />
+        {{/cover}}
+        {{^cover}}
+          <span class="no-cover">No Cover</span>
+        {{/cover}}
+      </div>
+      <div class="card-body">
+        <span class="card-title">{{title}}</span>
+        <span class="card-author">{{authors}}</span>
+      </div>
+    </div>
+  </script>
+ 
+  <!-- single book row for list view -->
+  <script type="text/template" id="tpl-card-list">
+    <div class="book-list-item" data-id="{{id}}" data-source="{{source}}">
+      <div class="list-cover">
+        {{#cover}}
+          <img src="{{cover}}" alt="{{title}}" loading="lazy" />
+        {{/cover}}
+        {{^cover}}
+          <span class="no-cover-sm">No Cover</span>
+        {{/cover}}
+      </div>
+      <div class="list-info">
+        <span class="list-title">{{title}}</span>
+        <span class="list-author">{{authors}}</span>
+      </div>
+      <span class="list-arrow">&rsaquo;</span>
+    </div>
+  </script>
+ 
+  <!-- book detail panel -->
+  <script type="text/template" id="tpl-detail">
+    <div class="detail-panel">
+      <button class="close-btn" id="closeDetail">X</button>
+ 
+      <div class="detail-cover">
+        {{#coverLg}}
+          <img src="{{coverLg}}" alt="{{title}}" />
+        {{/coverLg}}
+        {{^coverLg}}
+          <div class="no-cover-lg">No Cover Available</div>
+        {{/coverLg}}
+      </div>
+ 
+      <div class="detail-info">
+        <h2>{{title}}</h2>
+        <p class="detail-authors">{{authors}}</p>
+        <p class="detail-publisher">Published by {{publisher}}</p>
+ 
+        <div class="detail-meta">
+          <span class="meta-tag">Published: {{published}}</span>
+          {{#pages}}<span class="meta-tag">{{pages}}</span>{{/pages}}
+          {{#language}}<span class="meta-tag">Language: {{language}}</span>{{/language}}
+          {{#rating}}<span class="meta-tag">Rating: {{rating}}</span>{{/rating}}
+          {{#price}}<span class="price-tag">{{price}}</span>{{/price}}
+        </div>
+ 
+        {{#categories}}
+          <h3>Genre</h3>
+          <p>{{categories}}</p>
+        {{/categories}}
+ 
+        <h3>Description</h3>
+        <p>{{description}}</p>
+ 
+        {{#previewLink}}
+          <a class="preview-btn" href="{{previewLink}}" target="_blank">
+            Preview on Google Books &rarr;
+          </a>
+        {{/previewLink}}
+      </div>
+    </div>
+  </script>
+ 
+</head>
+<body>
+ 
+  <!-- nav -->
+  <nav class="navbar">
+    <span class="logo">Milestone 4 — Book Search SPA</span>
+  </nav>
+ 
+  <!--search section -->
+  <header class="hero">
+    <h1>Search for Books</h1>
+    <p>Powered by the Google Books API</p>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Enter a title, author, or keyword..." />
+      <button id="searchBtn">Search</button>
+    </div>
+  </header>
+ 
+  <!-- main content -->
+  <main class="container">
+ 
+    <!-- switches between search results and collection
+        results are preserved when switching tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="search">Search Results</button>
+      <button class="tab-btn" data-tab="collection">Library</button>
+    </div>
+ 
+    <!-- search tab -->
+    <div id="tab-search" class="tab-content">
+ 
+      <!-- before search is run -->
+      <div id="searchPlaceholder" class="placeholder-msg">
+        <p>Use the search bar above to find books.</p>
+      </div>
+ 
+      <!-- spinner while loading -->
+      <div id="searchLoading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Searching for books...</p>
+      </div>
+ 
+      <!-- no results message -->
+      <div id="noResults" class="no-results hidden">
+        <p>No books were found. Try a different search term.</p>
+      </div>
+ 
+      <!-- count, view toggle, pagination for results -->
+      <div id="searchHeader" class="results-header hidden">
+        <span id="resultsCount"></span>
+        <div class="header-right">
+          <!-- toggle buttons -->
+          <div class="view-toggle">
+            <button id="btnGrid" class="view-btn active" title="Grid view">
+              &#9639; Grid
+            </button>
+            <button id="btnList" class="view-btn" title="List view">
+              &#9776; List
+            </button>
+          </div>
+          <!-- pagination -->
+          <div id="pagination" class="pagination"></div>
+        </div>
+      </div>
+ 
+      <!-- cards / rows injected here -->
+      <div id="booksGrid" class="books-grid"></div>
+ 
+      <!-- detail panel appears here on card click -->
+      <div id="detailPanel" class="hidden"></div>
+ 
+    </div>
+ 
+    <!-- my library tab -->
+    <div id="tab-collection" class="tab-content hidden">
+ 
+      <!-- sub tabs between in my library for if i ever wanna add other tabs
+        + view toggle -->
+      <div class="sub-tab-bar">
+        <button class="sub-tab-btn active" data-subtab="mybooks">My Books</button>
+ 
+        <!-- toggle for collection, same as search results -->
+        <div class="view-toggle" style="margin-left: auto;">
+          <button id="btnCollectionGrid" class="view-btn active" title="Grid view">&#9639; Grid</button>
+          <button id="btnCollectionList" class="view-btn" title="List view">&#9776; List</button>
+        </div>
+      </div>
+ 
+      <!-- my Books section -->
+      <div id="subtab-mybooks" class="subtab-content">
+        <div id="myBooksLoading" class="loading">
+          <div class="spinner"></div>
+          <p>Loading library...</p>
+        </div>
+        <div id="myBooksGrid" class="books-grid"></div>
+      </div>
+ 
+      <!-- detail panel for library -->
+      <div id="collectionDetailPanel" class="hidden"></div>
+ 
+    </div>
+ 
+  </main>
+ 
+  <!-- footer -->
+  <footer class="footer">
+    <p>Milestone 4 — Book Search SPA &mdash; Google Books API</p>
+  </footer>
+ 
+  <!-- script at the bottom of body, guarantees load order which is:
+       jQuery, mustache, app.js -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/mustache.min.js"></script>
+  <script src="js/app.js"></script>
+ 
+</body>
+</html>
